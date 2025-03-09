@@ -33,7 +33,7 @@ def issue_details(update: Update, context: CallbackContext):
     context.user_data['issue_details'] = update.message.text
 
     # Get the admin chat id from an environment variable
-    admin_chat_id = int(os.environ.get("7295071438", "0"))
+    admin_chat_id = int(os.environ.get("-4608147453", "0"))
     summary = (
         f"New support request:\n"
         f"Issue Type: {context.user_data['issue_type']}\n"
