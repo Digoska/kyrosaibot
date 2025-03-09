@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 import threading
 from telegram import Update
@@ -31,8 +32,8 @@ def issue_type(update: Update, context: CallbackContext):
 def issue_details(update: Update, context: CallbackContext):
     context.user_data['issue_details'] = update.message.text
 
-    # Replace with your admin's chat id
-    admin_chat_id = int(os.environ.get("7295071438", "0"))
+    # Get the admin chat id from an environment variable
+    admin_chat_id = int(os.environ.get("ADMIN_CHAT_ID", "0"))
     summary = (
         f"New support request:\n"
         f"Issue Type: {context.user_data['issue_type']}\n"
@@ -48,8 +49,8 @@ def cancel(update: Update, context: CallbackContext):
     return ConversationHandler.END
 
 def run_bot():
-    # Get your token from environment variables
-    token = os.environ.get("7284527981:AAEN9XKdRh-r9LYgLUCEYFrrcyRdbihyhWs")
+    # Get your bot token from an environment variable
+    token = os.environ.get("TELEGRAM_TOKEN")
     updater = Updater(token, use_context=True)
     dp = updater.dispatcher
 
@@ -67,8 +68,7 @@ def run_bot():
     updater.idle()
 
 if __name__ == '__main__':
-    import os
-    # Start Flask web server in a separate thread
+    # Start Flask web server in a separate thread for Railway
     threading.Thread(target=run_web).start()
     # Start the Telegram bot
     run_bot()
