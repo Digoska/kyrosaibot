@@ -33,7 +33,7 @@ def issue_details(update: Update, context: CallbackContext):
     context.user_data['issue_details'] = update.message.text
 
     # Get the admin chat id from an environment variable
-    admin_chat_id = int(os.environ.get("-4608147453", "0"))
+    admin_chat_id = int(os.environ.get("ADMIN_CHAT_ID", "0"))
     summary = (
         f"New support request:\n"
         f"Issue Type: {context.user_data['issue_type']}\n"
@@ -50,7 +50,10 @@ def cancel(update: Update, context: CallbackContext):
 
 def run_bot():
     # Get your bot token from an environment variable
-    token = os.environ.get("7284527981:AAEN9XKdRh-r9LYgLUCEYFrrcyRdbihyhWs")
+    token = os.environ.get("TELEGRAM_TOKEN")
+    if not token:
+        print("Error: TELEGRAM_TOKEN is not set!")
+        return
     updater = Updater(token, use_context=True)
     dp = updater.dispatcher
 
